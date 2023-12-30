@@ -9,7 +9,7 @@
       "env": {
         "node": true
       },
-      "files": [".eslintrc.{js,cjs}"],
+      "files": [".eslintrc.json"],
       "parserOptions": {
         "sourceType": "script"
       }
