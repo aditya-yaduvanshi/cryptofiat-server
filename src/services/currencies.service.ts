@@ -12,7 +12,7 @@ axios.defaults.baseURL = API_URL;
 
 export const listCryptoCurrencies = async () => {
   try {
-    const res = await axios.get('/cryptocurrency/listings/latest', {
+    const res = await axios.get('/v1/cryptocurrency/listings/latest', {
       params: {
         limit: 200,
       },
@@ -23,5 +23,21 @@ export const listCryptoCurrencies = async () => {
   } catch (err) {
     console.log('Error listing crypto currencies: ', err);
     return [];
+  }
+};
+
+export const getCryptoInfos = async (ids: number[]) => {
+  try {
+    const res = await axios.get('/v2/cryptocurrency/info', {
+      params: {
+        id: ids.join(','),
+      },
+    });
+    const { data, status } = res.data;
+    console.log(status.error_message);
+    return data || {};
+  } catch (err) {
+    console.log('Error fetching crypto info: ', err);
+    return {};
   }
 };
