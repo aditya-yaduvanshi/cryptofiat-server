@@ -41,3 +41,15 @@ export const getCryptoInfos = async (ids: number[]) => {
     return {};
   }
 };
+
+export const listFiatCurrencies = async () => {
+  try {
+    const res = await axios.get('v1/fiat/map');
+    const { data, status } = res.data;
+    console.log(status.error_message);
+    return data || [];
+  } catch (err) {
+    console.log('Error listing fiat currencies: ', err);
+    return [];
+  }
+};
