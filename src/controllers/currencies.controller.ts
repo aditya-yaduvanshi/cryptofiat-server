@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { getCryptoInfos, listCryptoCurrencies, listFiatCurrencies } from 'services/currencies.service';
+import { getCryptoInfos, listCryptoCurrencies, listFiatCurrencies } from '../services/currencies.service';
+import { CryptoCurrency, CryptoInfo } from '../types';
 
 /**
  * @name listCurrenciesHandler - A handler function to handle list currencies api endpoint.
@@ -14,7 +15,7 @@ export const listCurrenciesHandler = async (_req: Request, res: Response) => {
     const [cryptoCurrencyList, fiatCurrencies] = await Promise.all([listCryptoCurrencies(), listFiatCurrencies()]);
 
     // define an object to store information of each crypto currency by [id]: info format
-    let cryptoInfos: Record<string, Record<string, any>> = {};
+    let cryptoInfos: Record<string, CryptoInfo> = {};
 
     // check if there is any data if then fetch information for all crypto currencies to get the logo url
     if (cryptoCurrencyList.length) {
@@ -23,7 +24,7 @@ export const listCurrenciesHandler = async (_req: Request, res: Response) => {
     }
 
     // mapping crypto currencies to include only useful fields
-    const cryptoCurrencies = cryptoCurrencyList.map((currency) => ({
+    const cryptoCurrencies = cryptoCurrencyList.map((currency: CryptoCurrency) => ({
       id: currency.id,
       name: currency.name,
       symbol: currency.symbol,

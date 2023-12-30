@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { config } from 'dotenv';
+import { CryptoCurrency, CryptoInfo, FiatCurrency } from '../types';
 
 config();
 
@@ -10,7 +11,7 @@ const API_URL = process.env.CMC_API_URL ?? '';
 axios.defaults.headers.common['X-CMC_PRO_API_KEY'] = API_KEY;
 axios.defaults.baseURL = API_URL;
 
-export const listCryptoCurrencies = async () => {
+export const listCryptoCurrencies = async (): Promise<CryptoCurrency[]> => {
   try {
     const res = await axios.get('/v1/cryptocurrency/listings/latest', {
       params: {
@@ -26,7 +27,7 @@ export const listCryptoCurrencies = async () => {
   }
 };
 
-export const getCryptoInfos = async (ids: number[]) => {
+export const getCryptoInfos = async (ids: number[]): Promise<Record<string, CryptoInfo>> => {
   try {
     const res = await axios.get('/v2/cryptocurrency/info', {
       params: {
@@ -42,7 +43,7 @@ export const getCryptoInfos = async (ids: number[]) => {
   }
 };
 
-export const listFiatCurrencies = async () => {
+export const listFiatCurrencies = async (): Promise<FiatCurrency[]> => {
   try {
     const res = await axios.get('v1/fiat/map');
     const { data, status } = res.data;

@@ -1,6 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
-import currencyRouter from 'routes/currencies.route';
+import currencyRouter from './routes/currencies.route';
 
 config();
 
