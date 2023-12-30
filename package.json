@@ -4,10 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
     "test": "jest"
   },
