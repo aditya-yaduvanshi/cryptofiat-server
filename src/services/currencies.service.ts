@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import { CryptoCurrency, CryptoInfo, FiatCurrency } from '../types';
+import type { CryptoCurrency, CryptoInfo, FiatCurrency } from '../types';
 
 config();
 

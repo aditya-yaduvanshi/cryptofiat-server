@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import type { CryptoCurrency, CryptoInfo } from '../types';
 import { getCryptoInfos, listCryptoCurrencies, listFiatCurrencies } from '../services/currencies.service';
-import { CryptoCurrency, CryptoInfo } from '../types';
 
 /**
  * @name listCurrenciesHandler - A handler function to handle list currencies api endpoint.
