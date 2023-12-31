@@ -72,7 +72,7 @@ export const getFiatConversionRate = async ({
         access_key: ER_API_KEY,
         from: source,
         amount,
-        target,
+        to: target,
       },
     });
     const { result, success } = res.data;
