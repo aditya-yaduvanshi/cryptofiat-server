@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'dotenv';
-import type { CryptoCurrency, CryptoInfo, FiatCurrency } from '../types';
+import type { CryptoCurrency, CryptoInfo, CryptoQuote, FiatCurrency } from '../types';
 
 config();
 
@@ -20,8 +20,7 @@ export const listCryptoCurrencies = async (): Promise<CryptoCurrency[]> => {
         limit: 200,
       },
     });
-    const { data, status } = res.data;
-    console.log(status.error_message);
+    const { data } = res.data;
     return data || [];
   } catch (err) {
     console.log('Error listing crypto currencies: ', err);
@@ -36,8 +35,7 @@ export const getCryptoInfos = async (ids: number[]): Promise<Record<string, Cryp
         id: ids.join(','),
       },
     });
-    const { data, status } = res.data;
-    console.log(status.error_message);
+    const { data } = res.data;
     return data || {};
   } catch (err) {
     console.log('Error fetching crypto info: ', err);
@@ -48,8 +46,7 @@ export const getCryptoInfos = async (ids: number[]): Promise<Record<string, Cryp
 export const listFiatCurrencies = async (): Promise<FiatCurrency[]> => {
   try {
     const res = await axios.get('v1/fiat/map');
-    const { data, status } = res.data;
-    console.log(status.error_message);
+    const { data } = res.data;
     return data || [];
   } catch (err) {
     console.log('Error listing fiat currencies: ', err);
@@ -57,28 +54,40 @@ export const listFiatCurrencies = async (): Promise<FiatCurrency[]> => {
   }
 };
 
-export const getFiatConversionRate = async ({
-  source = 'USD',
-  amount,
-  target,
+export const getCryptoQuotes = async ({
+  ids,
+  symbols,
 }: {
-  source: string;
-  amount: number;
-  target: string;
-}) => {
+  ids?: number[];
+  symbols?: string[];
+}): Promise<Record<string, CryptoQuote>> => {
   try {
-    const res = await axios.get(`${ER_API_URL}/v1/convert`, {
+    if (!ids?.length && !symbols?.length) throw new Error('One of Ids or symbols is required!');
+    const res = await axios.get('/v1/cryptocurrency/quotes/latest', {
       params: {
-        access_key: ER_API_KEY,
-        from: source,
-        amount,
-        to: target,
+        id: ids?.join(','),
+        symbol: symbols?.join(','),
       },
     });
-    const { result, success } = res.data;
-    return { data: result, error: success ? null : 'Cannot convert at the moment!' };
+    const { data } = res.data;
+    return data || {};
   } catch (err) {
-    console.log('Error getting fiat conversion rate: ', err);
+    console.log('Error fetching crypto info: ', err);
+    return {};
+  }
+};
+
+export const getFiatExchangeRates = async () => {
+  try {
+    const res = await axios.get(`${ER_API_URL}/v1/latest`, {
+      params: {
+        access_key: ER_API_KEY,
+      },
+    });
+    const { rates, success } = res.data;
+    return { data: rates, error: success ? null : 'Cannot fetch exchange rates!' };
+  } catch (err) {
+    console.log('Error getting fiat exchange rates: ', err);
     return { error: 'Something went wrong. Please try again later.' };
   }
 };
