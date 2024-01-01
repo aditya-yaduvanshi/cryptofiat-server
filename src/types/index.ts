@@ -11,6 +11,13 @@ export type CryptoInfo = {
   logo: string;
 };
 
+export type CryptoQuote = {
+  id: number;
+  name: string;
+  symbol: string;
+  quote: Record<string, Record<string, number>>;
+};
+
 export type FiatCurrency = {
   id: number;
   name: string;
