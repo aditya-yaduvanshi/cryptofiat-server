@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node .",
+    "start": "node dist/src/index.js",
     "dev": "nodemon src/index.ts",
     "prepare": "husky install",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
