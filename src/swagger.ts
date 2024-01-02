@@ -17,7 +17,7 @@ const options = {
       },
     ],
   },
-  apis: [`${__dirname}/routes/*.ts`],
+  apis: ['src/routes/*.ts'],
 };
 
 export default options;
