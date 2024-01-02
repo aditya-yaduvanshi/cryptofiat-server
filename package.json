@@ -2,10 +2,10 @@
   "name": "cryptofiat-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/index.js",
+  "main": "./dist/src/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/src/index.js",
+    "start": "node .",
     "dev": "nodemon src/index.ts",
     "prepare": "husky install",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
